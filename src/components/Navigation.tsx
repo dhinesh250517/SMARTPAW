@@ -13,6 +13,7 @@ const Navigation = () => {
     { path: "/reported-animals", label: "View Reports" },
     { path: "/hospitals", label: "Hospitals" },
     { path: "/adopt-donate", label: "Adopt & Donate" },
+    { path: "/tracking", label: "GPS Tracking" },
     { path: "/contact", label: "Contact" },
   ];
 

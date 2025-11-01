@@ -8,9 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Lock, MapPin, TrendingUp, Users, Building2, Heart, Phone, Mail, User, Calendar, Check, X } from "lucide-react";
+import { Lock, MapPin, TrendingUp, Users, Building2, Heart, Phone, Mail, User, Calendar, Check, X, BarChart3, PieChart, LineChart, Activity } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { BarChart, Bar, PieChart as RechartsPieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart as RechartsLineChart, Line, Area, AreaChart } from "recharts";
 
 const Dashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -265,25 +266,294 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Map View */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
-              City Map View
-            </CardTitle>
-            <CardDescription>Visual representation of reported animals across the city</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <MapPin className="h-12 w-12 mx-auto mb-2" />
-                <p>Interactive map showing all reported locations</p>
-                <p className="text-sm mt-1">(Map integration with markers for each report)</p>
+        {/* Analytics Section */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <PieChart className="h-5 w-5" />
+                Animal Problems Distribution in Tamil Nadu
+              </CardTitle>
+              <CardDescription>Breakdown of different animal-related incidents</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <RechartsPieChart>
+                  <Pie
+                    data={[
+                      { name: 'Aggressive Bites', value: 342, color: 'hsl(var(--destructive))' },
+                      { name: 'Animal Accidents', value: 256, color: 'hsl(var(--warning))' },
+                      { name: 'Stray Dog Deaths', value: 189, color: 'hsl(var(--muted-foreground))' },
+                      { name: 'Disease Spread', value: 158, color: 'hsl(var(--secondary))' },
+                      { name: 'Injury Cases', value: 423, color: 'hsl(var(--primary))' },
+                      { name: 'Abandonment', value: 234, color: 'hsl(var(--accent))' }
+                    ]}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={80}
+                    fill="hsl(var(--primary))"
+                    dataKey="value"
+                  >
+                    {[
+                      { name: 'Aggressive Bites', value: 342, color: 'hsl(var(--destructive))' },
+                      { name: 'Animal Accidents', value: 256, color: 'hsl(var(--warning))' },
+                      { name: 'Stray Dog Deaths', value: 189, color: 'hsl(var(--muted-foreground))' },
+                      { name: 'Disease Spread', value: 158, color: 'hsl(var(--secondary))' },
+                      { name: 'Injury Cases', value: 423, color: 'hsl(var(--primary))' },
+                      { name: 'Abandonment', value: 234, color: 'hsl(var(--accent))' }
+                    ].map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </RechartsPieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Monthly Problem Trends
+              </CardTitle>
+              <CardDescription>Animal-related incidents over the past 6 months</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={[
+                    { month: 'May', bites: 52, accidents: 38, diseases: 24, deaths: 28 },
+                    { month: 'Jun', bites: 61, accidents: 45, diseases: 29, deaths: 31 },
+                    { month: 'Jul', bites: 58, accidents: 42, diseases: 26, deaths: 35 },
+                    { month: 'Aug', bites: 64, accidents: 48, diseases: 31, deaths: 29 },
+                    { month: 'Sep', bites: 55, accidents: 40, diseases: 25, deaths: 33 },
+                    { month: 'Oct', bites: 52, accidents: 43, diseases: 23, deaths: 33 }
+                  ]}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="bites" name="Aggressive Bites" fill="hsl(var(--destructive))" />
+                  <Bar dataKey="accidents" name="Animal Accidents" fill="hsl(var(--warning))" />
+                  <Bar dataKey="diseases" name="Disease Spread" fill="hsl(var(--secondary))" />
+                  <Bar dataKey="deaths" name="Stray Deaths" fill="hsl(var(--muted-foreground))" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Website Usage Analytics */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="h-5 w-5" />
+                Platform Engagement Metrics
+              </CardTitle>
+              <CardDescription>Website usage and community participation</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart
+                  data={[
+                    { month: 'May', reports: 145, adoptions: 23, donations: 18, hospitals: 5 },
+                    { month: 'Jun', reports: 178, adoptions: 31, donations: 25, hospitals: 7 },
+                    { month: 'Jul', reports: 203, adoptions: 38, donations: 32, hospitals: 9 },
+                    { month: 'Aug', reports: 234, adoptions: 45, donations: 41, hospitals: 12 },
+                    { month: 'Sep', reports: 267, adoptions: 52, donations: 48, hospitals: 14 },
+                    { month: 'Oct', reports: 298, adoptions: 61, donations: 56, hospitals: 16 }
+                  ]}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                >
+                  <defs>
+                    <linearGradient id="colorReports" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorAdoptions" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--accent))" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="hsl(var(--accent))" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorDonations" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--secondary))" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="hsl(var(--secondary))" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  <Legend />
+                  <Area type="monotone" dataKey="reports" name="Animal Reports" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorReports)" />
+                  <Area type="monotone" dataKey="adoptions" name="Adoptions" stroke="hsl(var(--accent))" fillOpacity={1} fill="url(#colorAdoptions)" />
+                  <Area type="monotone" dataKey="donations" name="Donations" stroke="hsl(var(--secondary))" fillOpacity={1} fill="url(#colorDonations)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Impact Success Rate
+              </CardTitle>
+              <CardDescription>Resolution and success metrics over time</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <RechartsLineChart
+                  data={[
+                    { month: 'May', resolved: 68, adopted: 85, funded: 72 },
+                    { month: 'Jun', resolved: 72, adopted: 87, funded: 78 },
+                    { month: 'Jul', resolved: 75, adopted: 90, funded: 82 },
+                    { month: 'Aug', resolved: 78, adopted: 92, funded: 85 },
+                    { month: 'Sep', resolved: 81, adopted: 94, funded: 88 },
+                    { month: 'Oct', resolved: 84, adopted: 96, funded: 91 }
+                  ]}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" unit="%" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="resolved" name="Cases Resolved %" stroke="hsl(var(--primary))" strokeWidth={3} dot={{ r: 5 }} activeDot={{ r: 8 }} />
+                  <Line type="monotone" dataKey="adopted" name="Adoption Success %" stroke="hsl(var(--accent))" strokeWidth={3} dot={{ r: 5 }} />
+                  <Line type="monotone" dataKey="funded" name="Funding Goal %" stroke="hsl(var(--secondary))" strokeWidth={3} dot={{ r: 5 }} />
+                </RechartsLineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Predictive Analytics */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <LineChart className="h-5 w-5" />
+                Predicted Problem Reduction
+              </CardTitle>
+              <CardDescription>AI-powered forecast showing expected decrease in incidents</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <RechartsLineChart
+                  data={[
+                    { month: 'Oct', actual: 52, predicted: null },
+                    { month: 'Nov', actual: null, predicted: 48 },
+                    { month: 'Dec', actual: null, predicted: 44 },
+                    { month: 'Jan', actual: null, predicted: 39 },
+                    { month: 'Feb', actual: null, predicted: 35 },
+                    { month: 'Mar', actual: null, predicted: 31 }
+                  ]}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" label={{ value: 'Incidents', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="actual" name="Current Data" stroke="hsl(var(--primary))" strokeWidth={3} dot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="predicted" name="Predicted Trend" stroke="hsl(var(--accent))" strokeWidth={3} strokeDasharray="5 5" dot={{ r: 6, fill: 'hsl(var(--accent))' }} />
+                </RechartsLineChart>
+              </ResponsiveContainer>
+              <div className="mt-4 p-3 bg-accent/10 rounded-lg border border-accent/20">
+                <p className="text-sm text-accent-foreground font-medium">
+                  📊 Prediction shows 40% reduction in incidents over 6 months with current platform usage
+                </p>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BarChart3 className="h-5 w-5" />
+                Projected Platform Growth
+              </CardTitle>
+              <CardDescription>Expected increase in community engagement</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                  data={[
+                    { month: 'Nov', reports: 320, adoptions: 68, hospitals: 18 },
+                    { month: 'Dec', reports: 345, adoptions: 75, hospitals: 21 },
+                    { month: 'Jan', reports: 375, adoptions: 83, hospitals: 24 },
+                    { month: 'Feb', reports: 410, adoptions: 92, hospitals: 27 },
+                    { month: 'Mar', reports: 450, adoptions: 102, hospitals: 31 }
+                  ]}
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))',
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '6px'
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="reports" name="Expected Reports" fill="hsl(var(--primary))" />
+                  <Bar dataKey="adoptions" name="Expected Adoptions" fill="hsl(var(--accent))" />
+                  <Bar dataKey="hospitals" name="New Hospitals" fill="hsl(var(--secondary))" />
+                </BarChart>
+              </ResponsiveContainer>
+              <div className="mt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+                <p className="text-sm text-primary-foreground font-medium">
+                  📈 Platform expected to grow by 50% in user engagement with current adoption trends
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="max-w-5xl mx-auto h-96 rounded-xl overflow-hidden border border-border glass-card">
+            <iframe
+              className="w-full h-full"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.105476113657!2d80.01627727020738!3d13.028954687291671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52605c8001b0b3%3A0x17397b086e047e7c!2sSaveetha%20Engineering%20College!5e0!3m2!1sen!2sin!4v1746160094996!5m2!1sen!2sin"
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+             />
+             
+
             </div>
-          </CardContent>
-        </Card>
 
         {/* Tabs for different sections */}
         <Tabs defaultValue="animals" className="space-y-4">

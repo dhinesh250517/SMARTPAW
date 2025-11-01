@@ -10,6 +10,7 @@ import Hospitals from "./pages/Hospitals";
 import AdoptDonate from "./pages/AdoptDonate";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
+import AnimalTracking from "./pages/AnimalTracking";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/hospitals" element={<Hospitals />} />
           <Route path="/adopt-donate" element={<AdoptDonate />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tracking" element={<AnimalTracking />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
