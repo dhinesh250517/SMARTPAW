@@ -266,6 +266,7 @@ const Dashboard = () => {
           </Card>
         </div>
 
+<<<<<<< HEAD
         {/* Analytics Section */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <Card>
@@ -544,6 +545,9 @@ const Dashboard = () => {
         </div>
 
         <div className="max-w-5xl mx-auto h-96 rounded-xl overflow-hidden border border-border glass-card">
+=======
+         <div className="max-w-5xl mx-auto h-96 rounded-xl overflow-hidden border border-border glass-card">
+>>>>>>> 6c1233a661bb6ac50f557202cca19749405418cb
             <iframe
               className="w-full h-full"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.105476113657!2d80.01627727020738!3d13.028954687291671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52605c8001b0b3%3A0x17397b086e047e7c!2sSaveetha%20Engineering%20College!5e0!3m2!1sen!2sin!4v1746160094996!5m2!1sen!2sin"
