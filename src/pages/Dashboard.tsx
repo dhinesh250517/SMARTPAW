@@ -934,7 +934,7 @@ const Dashboard = () => {
                   {selectedAnimal.status === 'resolved' && (
                     <div className="text-center text-muted-foreground">
                       <Check className="h-8 w-8 mx-auto mb-2 text-green-600" />
-                      <p>This case has been resolved</p>
+                      <p>This case has been resolved !</p>
                     </div>
                   )}
                 </div>
@@ -950,3 +950,5 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
