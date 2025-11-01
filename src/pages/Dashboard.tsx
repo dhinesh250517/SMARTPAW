@@ -279,7 +279,7 @@ const Dashboard = () => {
               <div className="text-center text-muted-foreground">
                 <MapPin className="h-12 w-12 mx-auto mb-2" />
                 <p>Interactive map showing all reported locations</p>
-                <p className="text-sm mt-1">(Map integration with markers for each report)</p>
+                <p className="text-sm mt-1">https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.105476113657!2d80.01627727020738!3d13.028954687291671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52605c8001b0b3%3A0x17397b086e047e7c!2sSaveetha%20Engineering%20College!5e0!3m2!1sen!2sin!4v1746160094996!5m2!1sen!2sin</p>
               </div>
             </div>
           </CardContent>
